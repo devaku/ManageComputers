@@ -1,6 +1,7 @@
 //Desktop computer: adds GPU type
 
-public class Desktop extends Computer { // Inherits from Computer
+public class Desktop { // Inherits from Computer
+    Computer computer = null;
     String GPUType = null;
 
     // Constructors
@@ -8,10 +9,8 @@ public class Desktop extends Computer { // Inherits from Computer
     } // No-arg constructor
 
     public Desktop(String CPU, String RAM, String disk, String GPUType) {
-        // Inherited from Computer superclass
-        this.CPU = CPU;
-        this.RAM = RAM;
-        this.disk = disk;
+
+        computer = new Computer(CPU, RAM, disk);
 
         // Only in Desktop subclass
         this.GPUType = GPUType;
@@ -29,7 +28,8 @@ public class Desktop extends Computer { // Inherits from Computer
 
     // Return formatted version of data
     public String toString() {
-        return "Type:Desktop\tCPU:" + this.CPU + "\tRAM:" + this.RAM + "\tDisk:" + this.disk + "\tGPU:" + this.GPUType;
+        return "Type:Desktop\tCPU:" + computer.CPU + "\tRAM:" + computer.RAM + "\tDisk:" + computer.disk + "\tGPU:"
+                + this.GPUType;
     }
 
 }
