@@ -140,9 +140,13 @@ public class ManageComputers {
                 System.out.print("Enter GPU:");
                 String GPUType = s.nextLine();
 
-                // Add new Desktop to ArrayList in main() method
-                computers.add(
-                        new Desktop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), GPUType));
+                // TRY TO Add new Desktop to ArrayList in main() method
+                try {
+                    computers.add(new Desktop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), GPUType));
+                // EXCEPTION IF DESKTOP CREATION FAILS
+                } catch (Exception e) {
+                    System.out.println("Desktop creation failed " + e);
+                }
 
                 break;
 
@@ -275,7 +279,15 @@ public class ManageComputers {
         System.out.print("Enter Disk:");
         disk = s.nextLine();
 
-        return new Computer(CPU, RAM, disk);
+        try {
+            return new Computer(CPU, RAM, disk);
+
+        } catch (Exception e) {
+            System.out.println("Desktop creation failed " + e);
+            System.out.println("Make sure the input is valid ");
+            return getComputerData(s);
+        }
+
 
     } // End of getComputerData
 
