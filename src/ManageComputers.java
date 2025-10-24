@@ -6,6 +6,26 @@ import java.util.Scanner;
 
 public class ManageComputers {
 
+    // Whitelist arrays for input validation
+    private static final String CPU_WHITELIST[] = { "i5", "i7" };
+    private static final String RAM_WHITELIST[] = { "16", "32" };
+    private static final String DISK_WHITELIST[] = { "512", "1024" };
+    private static final String SCREEN_WHITELIST[] = { "13", "14" };
+
+    // Helper method to prompt for input and validate against a whitelist created
+    private static String generralInputValidationPromptsWhitelists(Scanner s, String prompt, String[] whitelist) {
+        while (true) {
+            System.out.print(prompt);
+            String input = s.nextLine().trim();
+            for (String valid : whitelist) {
+                if (input.equals(valid)) {
+                    return input;
+                }
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String args[]) {
 
         // This ArrayList will hold all the computers in the system. Note that the type
@@ -66,7 +86,7 @@ public class ManageComputers {
         System.out.println("A) Add Computer");
         System.out.println("D) Delete Computer");
         System.out.println("E) Edit Computer");
-        System.out.println("X) eXit");
+        System.out.println("X) Exit");
         System.out.println("----------");
 
         // Get menu selection from keyboard
@@ -122,12 +142,17 @@ public class ManageComputers {
                 // Get CPU, RAM and Disk info
                 tempComputer = getComputerData(s);
 
-                System.out.print("Enter screen size:");
-                String screenSize = s.nextLine();
+                String prompt = ("Enter screen size:");
+                // Call the generralInputValidationPromptsWhitelists method to validated screen size input
+                String screenSize = generralInputValidationPromptsWhitelists(s, prompt, SCREEN_WHITELIST);
 
-                // Add new Laptop to ArrayList in main() method
-                computers.add(
-                        new Laptop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), screenSize));
+                // TRY TO Add new Laptop to ArrayList in main() method
+                try {
+                    computers.add(new Laptop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), screenSize));
+                // EXCEPTION IF LAPTOP CREATION FAILS
+                } catch (Exception e) {
+                    System.out.println("Laptop creation failed " + e);
+                }
 
                 break;
 
@@ -217,8 +242,9 @@ public class ManageComputers {
                     // Get CPU, RAM and Disk info, store in temporary Computer-type object
                     tempComputer = getComputerData(s);
 
-                    System.out.print("Enter screen size:");
-                    String screenSize = s.nextLine();
+                    // Input Validation for screen size
+                    String prompt = ("Enter screen size:");
+                    String screenSize = generralInputValidationPromptsWhitelists(s, prompt, SCREEN_WHITELIST);
 
                     // Get reference to the object in ArrayList<Computer> to edit
                     // Cast Computer to Laptop for setScreenSize call a few lines of code later
@@ -270,14 +296,15 @@ public class ManageComputers {
         String RAM = "";
         String disk = "";
 
-        System.out.print("Enter CPU:");
-        CPU = s.nextLine();
+        // Validations for CPU, RAM and disk using generralInputValidationPromptsWhitelists helper method
+        String prompt = ("Enter CPU:");
+        CPU = generralInputValidationPromptsWhitelists(s, prompt, CPU_WHITELIST);
 
-        System.out.print("Enter RAM:");
-        RAM = s.nextLine();
+        prompt = ("Enter RAM:");
+        RAM = generralInputValidationPromptsWhitelists(s, prompt, RAM_WHITELIST);
 
-        System.out.print("Enter Disk:");
-        disk = s.nextLine();
+        prompt = ("Enter Disk:");
+        disk = generralInputValidationPromptsWhitelists(s, prompt, DISK_WHITELIST);
 
         try {
             return new Computer(CPU, RAM, disk);
