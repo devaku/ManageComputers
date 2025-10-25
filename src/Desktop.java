@@ -15,7 +15,7 @@ public class Desktop { // Inherits from Computer
         if (CPU == null || RAM == null || disk == null || GPUType == null) {
             throw new IllegalArgumentException("Null value passed to Desktop constructor");
         }   
-        if (CPU.equals("i5") && !CPU.equals("i7")) {
+        if (!CPU.equals("i5") && !CPU.equals("i7")) {
             throw new IllegalArgumentException("Invalid CPU type");
         }
         if (!RAM.equals("16") && !RAM.equals("32")){
@@ -24,7 +24,7 @@ public class Desktop { // Inherits from Computer
         if (!disk.equals("512") && !disk.equals("1024")){
             throw new IllegalArgumentException("Invalid RAM amount");
         }
-        if (GPUType.equals("Nvidia") && GPUType.equals("AMD") ){
+        if (!GPUType.equals("Nvidia") && !GPUType.equals("AMD") ){
             throw new IllegalArgumentException("Invalid GPU type");
         }   
 
