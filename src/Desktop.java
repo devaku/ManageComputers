@@ -49,7 +49,7 @@ public class Desktop { // Inherits from Computer
 
     // Return formatted version of data
     public String toString() {
-        return "Type:Desktop\tCPU:" + computer.CPU + "\tRAM:" + computer.RAM + "\tDisk:" + computer.disk + "\tGPU:"
+        return "Type:Desktop\tCPU:" + computer.getCPU() + "\tRAM:" + computer.getRAM() + "\tDisk:" + computer.getDisk() + "\tGPU:"
                 + this.GPUType;
     }
 

@@ -235,28 +235,29 @@ public class ManageComputers {
             switch (computerType) {
 
                 // Editing a laptop
-                case "laptop":
+               case "laptop":
+                System.out.println("Editing a Laptop:");
 
-                    System.out.println("Editing a Laptop:");
+                // Get CPU, RAM and Disk info, store in temporary Computer-type object
+                tempComputer = getComputerData(s);
 
-                    // Get CPU, RAM and Disk info, store in temporary Computer-type object
-                    tempComputer = getComputerData(s);
+                // Input Validation for screen size
+                String prompt = ("Enter screen size:");
+                String screenSize = generralInputValidationPromptsWhitelists(s, prompt, SCREEN_WHITELIST);
 
-                    // Input Validation for screen size
-                    String prompt = ("Enter screen size:");
-                    String screenSize = generralInputValidationPromptsWhitelists(s, prompt, SCREEN_WHITELIST);
+                int idx = computerListNumberToEdit - 1;
 
-                    // Get reference to the object in ArrayList<Computer> to edit
-                    // Cast Computer to Laptop for setScreenSize call a few lines of code later
-                    Laptop laptopToEdit = (Laptop) computers.get(computerListNumberToEdit - 1);
+                // Create a new immutable Laptop and replace the old one
+                Laptop updatedLaptop = new Laptop(
+                        tempComputer.getCPU(),
+                        tempComputer.getRAM(),
+                        tempComputer.getDisk(),
+                        screenSize
+                );
 
-                    // Use setter methods to change mutable object state
-                    laptopToEdit.setCPU(tempComputer.getCPU());
-                    laptopToEdit.setRAM(tempComputer.getRAM());
-                    laptopToEdit.setDisk(tempComputer.getDisk());
-                    laptopToEdit.setScreenSize(screenSize);
+                computers.set(idx, updatedLaptop);
+                break;
 
-                    break;
 
                 // Editing a desktop, store in temporary Computer-type object
                 case "desktop":
